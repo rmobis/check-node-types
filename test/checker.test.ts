@@ -157,6 +157,13 @@ describe('check (devEngines source)', () => {
     expect(result.message).toContain('devEngines.runtime');
   });
 
+  it('warns when devEngines.runtime is not node', () => {
+    const result = check({ packagePath: fixturePkg('devEngines-bun'), source: 'devEngines' });
+    expect(result.status).toBe('warn');
+    expect(result.nodeVersion.raw).toBeNull();
+    expect(result.message).toContain('devEngines.runtime');
+  });
+
   it('warns when devEngines.runtime is unparseable', () => {
     const result = check({ packagePath: fixturePkg('unparseable-devEngines'), source: 'devEngines' });
     expect(result.status).toBe('warn');

@@ -66,16 +66,16 @@ export function readNodeVersion(
         return { raw, major: raw ? getMajorFromSpecifier(raw) : null };
       } else {
         const devEngines = pkg.devEngines as Record<string, unknown> | undefined;
-        const runtimeEngines = devEngines?.runtime as Record<string, string>[] | Record<string, string> | undefined;
 
         // npm allows both an object for a single runtime or an array for multiple
-        let nodeEngine: Record<string, string> | undefined;
-        if (Array.isArray(runtimeEngines)) {
-          nodeEngine = runtimeEngines.find(devEngine => devEngine?.name === 'node');
+        let runtimeEngines;
+        if (!Array.isArray(devEngines?.runtime)) {
+          runtimeEngines = [devEngines?.runtime as Record<string, string> | undefined];
         } else {
-          nodeEngine = runtimeEngines;
+          runtimeEngines = devEngines?.runtime as (Record<string, string> | undefined)[];
         }
 
+        const nodeEngine = runtimeEngines.find(devEngine => devEngine?.name === 'node');
         const raw = nodeEngine?.version ?? null;
         return { raw, major: raw ? getMinMajorFromRange(raw) : null };
       }

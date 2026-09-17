@@ -1,0 +1,11 @@
+{
+  "name": "fixture-devEngines-bun",
+  "devEngines": {
+    "runtime": {
+      "name": "bun",
+      "version": ">=1.4",
+      "onFail": "warn"
+    }
+  },
+  "devDependencies": { "@types/node": "^20.11.0" }
+}
