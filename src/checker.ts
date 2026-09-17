@@ -11,6 +11,7 @@ export function check({ packagePath, source }: CheckOptions): CheckResult {
   // Read target Node.js version from the chosen source
   const nodeVersion = readNodeVersion(packagePath, source);
   const label = sourceLabel(source);
+  const fix = sourceFix(source);
 
   // Read @types/node from package.json
   let typesNodeRaw: string | null = null;
@@ -61,9 +62,7 @@ export function check({ packagePath, source }: CheckOptions): CheckResult {
       nodeVersion,
       typesNode: { raw: typesNodeRaw, major: typesNodeMajor, location: typesLocation },
       message: `No ${label} found. Cannot verify @types/node compatibility.`,
-      fix: source === 'engines'
-        ? 'Add "engines": { "node": ">=XX" } to your package.json.'
-        : null,
+      fix,
     };
   }
 
@@ -123,4 +122,16 @@ export function check({ packagePath, source }: CheckOptions): CheckResult {
     message: `@types/node major (${typesNodeMajor}) does not match ${label} major (${nodeVersion.major}).`,
     fix: `npm install -D @types/node@^${nodeVersion.major}`,
   };
+}
+
+const SOURCE_FIXES: Record<VersionSource, string> = {
+  engines: 'Add `"engines": { "node": ">=XX" }` to your package.json.',
+  volta: 'Run `volta pin node@XX` to pin node to your package.json.',
+  nvmrc: 'Run `echo "XX.Y.Z" > .nvmrc` to save your node version in .nvmrc.',
+  'node-version': 'Run `echo "XX.Y.Z" > .node-version` to save your node version in .node-version.',
+  devEngines: 'Add `"devEngines": { "runtime": { "name": "node", "version": "^XX" }}}` to your package.json.',
+};
+
+function sourceFix(source: VersionSource): string {
+  return SOURCE_FIXES[source];
 }
