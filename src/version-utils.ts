@@ -68,7 +68,7 @@ export function readNodeVersion(
         const devEngines = pkg.devEngines as Record<string, unknown> | undefined;
         const runtimeEngines = devEngines?.runtime as Record<string, string>[] | Record<string, string> | undefined;
 
-        // npm allows both and object for a single runtime or an array for multiple
+        // npm allows both an object for a single runtime or an array for multiple
         let nodeEngine: Record<string, string> | undefined;
         if (Array.isArray(runtimeEngines)) {
           nodeEngine = runtimeEngines.find(devEngine => devEngine?.name === 'node');
