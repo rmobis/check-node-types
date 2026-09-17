@@ -12,7 +12,7 @@
 
 ## The Problem
 
-`@types/node` major versions map directly to Node.js releases: `@types/node@22` provides types for Node.js 22.
+`@types/node` major versions map directly to Node.js releases: `@types/node@22` provides types for Node.js 22.  
 If your project targets Node 20 but `@types/node` is `^22`, TypeScript will happily let you use Node 22 APIs that don't exist at runtime.
 
 No existing linter, ESLint plugin, or package manager catches this drift. We searched. Extensively.
