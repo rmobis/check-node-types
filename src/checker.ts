@@ -129,7 +129,7 @@ const SOURCE_FIXES: Record<VersionSource, string> = {
   volta: 'Run `volta pin node@XX` to pin node to your package.json.',
   nvmrc: 'Run `echo "XX.Y.Z" > .nvmrc` to save your node version in .nvmrc.',
   'node-version': 'Run `echo "XX.Y.Z" > .node-version` to save your node version in .node-version.',
-  devEngines: 'Add `"devEngines": { "runtime": { "name": "node", "version": "^XX" }}}` to your package.json.',
+  devEngines: 'Add `"devEngines": { "runtime": { "name": "node", "version": "^XX" }}` to your package.json.',
 };
 
 function sourceFix(source: VersionSource): string {
