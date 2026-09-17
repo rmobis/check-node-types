@@ -78,6 +78,12 @@ describe('CLI', () => {
     expect(stdout).toContain('PASS');
   });
 
+  it('--source devEngines reads from devEngines.runtime[.name=node].version', () => {
+    const { exitCode, stdout } = run(['--source', 'devEngines', '--package', fixturePkg('devEngines')]);
+    expect(exitCode).toBe(0);
+    expect(stdout).toContain('PASS');
+  });
+
   it('--print --json outputs JSON and preserves exit code', () => {
     const { exitCode, stdout } = run(['--print', '--json', '--package', fixturePkg('mismatch')]);
     const parsed = JSON.parse(stdout);

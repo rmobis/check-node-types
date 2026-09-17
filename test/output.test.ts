@@ -93,6 +93,12 @@ describe('formatResult', () => {
     const output = formatResult(voltaResult, baseOptions);
     expect(output).toContain('volta.node');
   });
+
+  it('uses correct source label for devEngines', () => {
+    const devEnginesResult: CheckResult = { ...failResult, source: 'devEngines' };
+    const output = formatResult(devEnginesResult, baseOptions);
+    expect(output).toContain('devEngines.runtime[.name=node].version');
+  });
 });
 
 describe('formatJson', () => {

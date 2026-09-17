@@ -1,0 +1,13 @@
+{
+  "name": "fixture-devEngines",
+  "devEngines": {
+    "runtime": [
+      {
+        "name": "node",
+        "version": ">=20",
+        "onFail": "warn"
+      }
+    ]
+  },
+  "devDependencies": { "@types/node": "^20.11.0" }
+}

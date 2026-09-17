@@ -74,6 +74,12 @@ describe('readNodeVersion', () => {
     expect(result.major).toBe(20);
   });
 
+  it('reads devEngines.runtime[.name=node].version from package.json', () => {
+    const result = readNodeVersion(fixture('devEngines'), 'devEngines');
+    expect(result.raw).toBe('>=20');
+    expect(result.major).toBe(20);
+  });
+
   it('reads .nvmrc file', () => {
     const result = readNodeVersion(fixture('nvmrc'), 'nvmrc');
     expect(result.major).toBe(20);

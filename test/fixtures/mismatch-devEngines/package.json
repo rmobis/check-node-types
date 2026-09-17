@@ -1,0 +1,13 @@
+{
+  "name": "fixture-mismatch-devEngines",
+  "devEngines": {
+    "runtime": [
+      {
+        "name": "node",
+        "version": ">=20",
+        "onFail": "warn"
+      }
+    ]
+  },
+  "devDependencies": { "@types/node": "^22.1.0" }
+}

@@ -1,0 +1,4 @@
+{
+  "name": "fixture-missing-devEngines",
+  "devDependencies": { "@types/node": "^20.0.0" }
+}

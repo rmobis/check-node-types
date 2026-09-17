@@ -1,0 +1,13 @@
+{
+  "name": "fixture-unparseable-devEngines",
+  "devEngines": {
+    "runtime": [
+      {
+        "name": "node",
+        "version": "not-a-version",
+        "onFail": "warn"
+      }
+    ]
+  },
+  "devDependencies": { "@types/node": "^20.0.0" }
+}
