@@ -14,6 +14,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript && chmod +x dist/cli.mjs",
+    "prepare": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "test": "vitest run",
     "test:watch": "vitest",
     "check-types": "node dist/cli.mjs",
