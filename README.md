@@ -74,6 +74,7 @@ check-node-types
 
 # Read Node.js version from different sources
 check-node-types --source engines      # reads engines.node from package.json (default)
+check-node-types --source devEngines   # reads devEngines.runtime[.name=node].version from package.json
 check-node-types --source volta        # reads volta.node from package.json
 check-node-types --source nvmrc        # reads .nvmrc file
 check-node-types --source node-version # reads .node-version file
@@ -140,12 +141,13 @@ RUN npm ci
 
 ### Version Sources
 
-| Source         | Reads from                                             |
-| -------------- | ------------------------------------------------------ |
-| `engines`      | `engines.node` in package.json                         |
-| `volta`        | `volta.node` in package.json                           |
-| `nvmrc`        | `.nvmrc` file in same directory as package.json        |
-| `node-version` | `.node-version` file in same directory as package.json |
+| Source         | Reads from                                               |
+| -------------- | -------------------------------------------------------- |
+| `engines`      | `engines.node` in package.json                           |
+| `volta`        | `volta.node` in package.json                             |
+| `devEngines`   | `devEngines.runtime[.name=node].version` in package.json |
+| `nvmrc`        | `.nvmrc` file in same directory as package.json          |
+| `node-version` | `.node-version` file in same directory as package.json   |
 
 ## Exit Codes
 
