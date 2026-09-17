@@ -65,8 +65,8 @@ export function readNodeVersion(
         const raw = volta?.node ?? null;
         return { raw, major: raw ? getMajorFromSpecifier(raw) : null };
       } else {
-        const devEngines = pkg.devEngines as Record<string, unknown>;
-        const runtimeEngines = devEngines?.runtime as Record<string, string>[] | Record<string, string>;
+        const devEngines = pkg.devEngines as Record<string, unknown> | undefined;
+        const runtimeEngines = devEngines?.runtime as Record<string, string>[] | Record<string, string> | undefined;
 
         // npm allows both and object for a single runtime or an array for multiple
         let nodeEngine: Record<string, string> | undefined;
