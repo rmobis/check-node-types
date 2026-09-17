@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import type { CheckResult, VersionSource } from './types.js';
-import { readNodeVersion, getMajorFromSpecifier, sourceLabel } from './version-utils.js';
+import { readNodeVersion, getMajorFromSpecifier, sourceLabel, sourceFix } from './version-utils.js';
 
 export interface CheckOptions {
   packagePath: string;
@@ -122,16 +122,4 @@ export function check({ packagePath, source }: CheckOptions): CheckResult {
     message: `@types/node major (${typesNodeMajor}) does not match ${label} major (${nodeVersion.major}).`,
     fix: `npm install -D @types/node@^${nodeVersion.major}`,
   };
-}
-
-const SOURCE_FIXES: Record<VersionSource, string> = {
-  engines: 'Add `"engines": { "node": ">=XX" }` to your package.json.',
-  volta: 'Run `volta pin node@XX` to pin node to your package.json.',
-  nvmrc: 'Run `echo "XX.Y.Z" > .nvmrc` to save your node version in .nvmrc.',
-  'node-version': 'Run `echo "XX.Y.Z" > .node-version` to save your node version in .node-version.',
-  devEngines: 'Add `"devEngines": { "runtime": { "name": "node", "version": "^XX" }}` to your package.json.',
-};
-
-function sourceFix(source: VersionSource): string {
-  return SOURCE_FIXES[source];
 }
