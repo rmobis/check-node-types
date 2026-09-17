@@ -66,8 +66,16 @@ export function readNodeVersion(
         return { raw, major: raw ? getMajorFromSpecifier(raw) : null };
       } else {
         const devEngines = pkg.devEngines as Record<string, unknown>;
-        const runtimeEngines = devEngines?.runtime as Record<string, string>[];
-        const nodeEngine = runtimeEngines?.find(devEngine => devEngine?.name === 'node') as Record<string, string>;
+        const runtimeEngines = devEngines?.runtime as Record<string, string>[] | Record<string, string>;
+
+        // npm allows both and object for a single runtime or an array for multiple
+        let nodeEngine: Record<string, string> | undefined;
+        if (Array.isArray(runtimeEngines)) {
+          nodeEngine = runtimeEngines.find(devEngine => devEngine?.name === 'node');
+        } else {
+          nodeEngine = runtimeEngines;
+        }
+
         const raw = nodeEngine?.version ?? null;
         return { raw, major: raw ? getMinMajorFromRange(raw) : null };
       }
@@ -94,7 +102,7 @@ const SOURCE_LABELS: Record<VersionSource, string> = {
   volta: 'volta.node',
   nvmrc: '.nvmrc',
   'node-version': '.node-version',
-  devEngines: 'devEngines.runtime[.name=node].version',
+  devEngines: 'devEngines.runtime',
 };
 
 export function sourceLabel(source: VersionSource): string {
