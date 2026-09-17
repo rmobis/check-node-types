@@ -118,7 +118,7 @@ describe('check (node-version source)', () => {
 });
 
 describe('check (devEngines source)', () => {
-  it('passes when @types/node matches devEngines.runtime[.name=node].version', () => {
+  it('passes when @types/node matches devEngines.runtime object', () => {
     const result = check({ packagePath: fixturePkg('devEngines'), source: 'devEngines' });
     expect(result.status).toBe('pass');
     expect(result.nodeVersion.major).toBe(20);
@@ -126,7 +126,23 @@ describe('check (devEngines source)', () => {
     expect(result.fix).toBeNull();
   });
 
-  it('fails when @types/node does not match devEngines.runtime[.name=node].version', () => {
+  it('passes when @types/node matches devEngines.runtime array', () => {
+    const result = check({ packagePath: fixturePkg('devEngines-array'), source: 'devEngines' });
+    expect(result.status).toBe('pass');
+    expect(result.nodeVersion.major).toBe(20);
+    expect(result.typesNode.major).toBe(20);
+    expect(result.fix).toBeNull();
+  });
+
+  it('passes when @types/node matches devEngines.runtime array with multiple runtimes', () => {
+    const result = check({ packagePath: fixturePkg('devEngines-array-multi'), source: 'devEngines' });
+    expect(result.status).toBe('pass');
+    expect(result.nodeVersion.major).toBe(20);
+    expect(result.typesNode.major).toBe(20);
+    expect(result.fix).toBeNull();
+  });
+
+  it('fails when @types/node does not match devEngines.runtime object', () => {
     const result = check({ packagePath: fixturePkg('mismatch-devEngines'), source: 'devEngines' });
     expect(result.status).toBe('fail');
     expect(result.nodeVersion.major).toBe(20);
@@ -134,14 +150,14 @@ describe('check (devEngines source)', () => {
     expect(result.fix).toContain('@types/node@^20');
   });
 
-  it('warns when devEngines.runtime[.name=node].version is missing', () => {
+  it('warns when devEngines.runtime is missing', () => {
     const result = check({ packagePath: fixturePkg('missing-devEngines'), source: 'devEngines' });
     expect(result.status).toBe('warn');
     expect(result.nodeVersion.raw).toBeNull();
-    expect(result.message).toContain('devEngines.runtime[.name=node].version');
+    expect(result.message).toContain('devEngines.runtime');
   });
 
-  it('warns when devEngines.runtime[.name=node].version is unparseable', () => {
+  it('warns when devEngines.runtime is unparseable', () => {
     const result = check({ packagePath: fixturePkg('unparseable-devEngines'), source: 'devEngines' });
     expect(result.status).toBe('warn');
     expect(result.message).toContain('Could not parse');

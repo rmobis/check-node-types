@@ -78,7 +78,7 @@ describe('CLI', () => {
     expect(stdout).toContain('PASS');
   });
 
-  it('--source devEngines reads from devEngines.runtime[.name=node].version', () => {
+  it('--source devEngines reads from devEngines.runtime', () => {
     const { exitCode, stdout } = run(['--source', 'devEngines', '--package', fixturePkg('devEngines')]);
     expect(exitCode).toBe(0);
     expect(stdout).toContain('PASS');

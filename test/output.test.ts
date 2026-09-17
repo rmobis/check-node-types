@@ -97,7 +97,7 @@ describe('formatResult', () => {
   it('uses correct source label for devEngines', () => {
     const devEnginesResult: CheckResult = { ...failResult, source: 'devEngines' };
     const output = formatResult(devEnginesResult, baseOptions);
-    expect(output).toContain('devEngines.runtime[.name=node].version');
+    expect(output).toContain('devEngines.runtime');
   });
 });
 

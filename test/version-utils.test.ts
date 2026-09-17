@@ -74,8 +74,20 @@ describe('readNodeVersion', () => {
     expect(result.major).toBe(20);
   });
 
-  it('reads devEngines.runtime[.name=node].version from package.json', () => {
+  it('reads devEngines.runtime object from package.json', () => {
     const result = readNodeVersion(fixture('devEngines'), 'devEngines');
+    expect(result.raw).toBe('>=20');
+    expect(result.major).toBe(20);
+  });
+
+  it('reads devEngines.runtime array from package.json', () => {
+    const result = readNodeVersion(fixture('devEngines-array'), 'devEngines');
+    expect(result.raw).toBe('>=20');
+    expect(result.major).toBe(20);
+  });
+
+  it('reads devEngines.runtime array with multiple runtimes from package.json', () => {
+    const result = readNodeVersion(fixture('devEngines-array-multi'), 'devEngines');
     expect(result.raw).toBe('>=20');
     expect(result.major).toBe(20);
   });
