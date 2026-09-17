@@ -47,7 +47,8 @@ export function readNodeVersion(
 
   switch (source) {
     case 'engines':
-    case 'volta': {
+    case 'volta':
+    case 'devEngines': {
       let pkg: Record<string, unknown>;
       try {
         pkg = JSON.parse(readFileSync(packagePath, 'utf-8'));
@@ -59,10 +60,16 @@ export function readNodeVersion(
         const engines = pkg.engines as Record<string, string> | undefined;
         const raw = engines?.node ?? null;
         return { raw, major: raw ? getMinMajorFromRange(raw) : null };
-      } else {
+      } else if (source === 'volta') {
         const volta = pkg.volta as Record<string, string> | undefined;
         const raw = volta?.node ?? null;
         return { raw, major: raw ? getMajorFromSpecifier(raw) : null };
+      } else {
+        const devEngines = pkg.devEngines as Record<string, unknown>;
+        const runtimeEngines = devEngines?.runtime as Record<string, string>[];
+        const nodeEngine = runtimeEngines?.find(devEngine => devEngine?.name === 'node') as Record<string, string>;
+        const raw = nodeEngine?.version ?? null;
+        return { raw, major: raw ? getMinMajorFromRange(raw) : null };
       }
     }
 
@@ -87,6 +94,7 @@ const SOURCE_LABELS: Record<VersionSource, string> = {
   volta: 'volta.node',
   nvmrc: '.nvmrc',
   'node-version': '.node-version',
+  devEngines: 'devEngines.runtime[.name=node].version',
 };
 
 export function sourceLabel(source: VersionSource): string {

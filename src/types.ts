@@ -1,4 +1,4 @@
-export type VersionSource = 'engines' | 'volta' | 'nvmrc' | 'node-version';
+export type VersionSource = 'engines' | 'volta' | 'nvmrc' | 'node-version' | 'devEngines';
 
 export interface CheckResult {
   status: 'pass' | 'fail' | 'warn';

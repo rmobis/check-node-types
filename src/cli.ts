@@ -22,7 +22,7 @@ program
   .option('--json', 'output results as JSON', false)
   .option('--no-color', 'disable colored output')
   .action((options) => {
-    const validSources: VersionSource[] = ['engines', 'volta', 'nvmrc', 'node-version'];
+    const validSources: VersionSource[] = ['engines', 'volta', 'nvmrc', 'node-version', 'devEngines'];
     if (!validSources.includes(options.source)) {
       console.error(`Invalid source: "${options.source}". Must be one of: ${validSources.join(', ')}`);
       process.exit(2);
