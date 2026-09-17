@@ -15,7 +15,7 @@ program
   .name('check-node-types')
   .description('Verify @types/node major version matches your target Node.js version')
   .version(pkg.version)
-  .option('--source <source>', 'where to read Node.js version from (engines, volta, nvmrc, node-version)', 'engines')
+  .option('--source <source>', 'where to read Node.js version from (engines, volta, nvmrc, node-version, devEngines)', 'engines')
   .option('--package <path>', 'path to package.json', resolve(process.cwd(), 'package.json'))
   .option('--print', 'print detected versions and exit', false)
   .option('-q, --quiet', 'only output on error', false)

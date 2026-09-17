@@ -12,7 +12,7 @@
 
 ## The Problem
 
-`@types/node` major versions map directly to Node.js releases: `@types/node@22` provides types for Node.js 22.  
+`@types/node` major versions map directly to Node.js releases: `@types/node@22` provides types for Node.js 22.
 If your project targets Node 20 but `@types/node` is `^22`, TypeScript will happily let you use Node 22 APIs that don't exist at runtime.
 
 No existing linter, ESLint plugin, or package manager catches this drift. We searched. Extensively.
@@ -74,7 +74,7 @@ check-node-types
 
 # Read Node.js version from different sources
 check-node-types --source engines      # reads engines.node from package.json (default)
-check-node-types --source devEngines   # reads devEngines.runtime[.name=node].version from package.json
+check-node-types --source devEngines   # reads devEngines.runtime from package.json
 check-node-types --source volta        # reads volta.node from package.json
 check-node-types --source nvmrc        # reads .nvmrc file
 check-node-types --source node-version # reads .node-version file
@@ -141,13 +141,13 @@ RUN npm ci
 
 ### Version Sources
 
-| Source         | Reads from                                               |
-| -------------- | -------------------------------------------------------- |
-| `engines`      | `engines.node` in package.json                           |
-| `volta`        | `volta.node` in package.json                             |
-| `devEngines`   | `devEngines.runtime[.name=node].version` in package.json |
-| `nvmrc`        | `.nvmrc` file in same directory as package.json          |
-| `node-version` | `.node-version` file in same directory as package.json   |
+| Source         | Reads from                                             |
+| -------------- | ------------------------------------------------------ |
+| `engines`      | `engines.node` in package.json                         |
+| `volta`        | `volta.node` in package.json                           |
+| `devEngines`   | `devEngines.runtime` in package.json                   |
+| `nvmrc`        | `.nvmrc` file in same directory as package.json        |
+| `node-version` | `.node-version` file in same directory as package.json |
 
 ## Exit Codes
 
